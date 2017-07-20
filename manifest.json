@@ -1,0 +1,7 @@
+{
+  "name": "cameron-social-media-timeline",
+  "short_name": "cameron-social-media-timeline",
+  "description": "This application is my own implementation of a social media timeline that will display pictures of uniform size, along with any associated text, date, user, and other data that may come with the picture.",
+  "start_url": "/",
+  "display": "standalone"
+}
