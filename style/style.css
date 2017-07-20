@@ -1,0 +1,16 @@
+/**
+ * @author: Cameron Malagar
+ * @date: July 18, 2017
+ *
+ * Style sheet for cameron-social-media-timeline-app application
+ */
+
+html, body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  background-color: #fff2e6;
+}

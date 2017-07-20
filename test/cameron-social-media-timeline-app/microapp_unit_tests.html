@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>cameron-social-media-timeline-app test</title>
+
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../src/cameron-social-media-timeline-app/cameron-social-media-timeline-app.html">
+    <link rel="import" href="../../src/cameron-coial-media-timeline-app/timeline-feed.html">
+  </head>
+  <body>
+
+    <test-fixture id="TimelineFeedFixtureWithEmptyInput">
+      <template>
+        <timeline-feed photos={{emptyResponse}}></timeline-feed>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="TimelineFeedFixtureWithOrderedInput">
+      <template>
+        <timeline-feed photos={{orderedResponseByTimestamp}}></timeline-feed>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="TimelineFeedFixtureWithUnorderedInput">
+      <template>
+        <timeline-feed photos={{unorderedResponseByTimestamp}}></timeline-feed>
+      </template>
+    </test-fixture>
+
+    <script>
+      // The two things that I wanted to test in my application were the sorting
+      // of posts as they came in, whether they came in ordered or unordered,
+      // and I wanted to test how my application would react to no posts being
+      // returned. 
+      suite('cameron-social-media-timeline-app', function() {
+        const emptyResponse = [];
+        const orderedResponseByTimestamp =
+          [
+            {
+              "id": 1,
+              "picture_url": "https://scontent-atl3-1.xx.fbcdn.net/v/t31.0-8/19243401_10155731299773268_3326131387475979087_o.jpg?oh=55397630186bc2bc009e0ab6563bfaec&oe=59C5986F",
+              "caption": "Just being artsy at Chihuly Garden and Glass Museum in Seattle, WA",
+              "name": "Cameron Malagar",
+              "timestamp": "2017-07-01T01:36:18.463Z"
+            },
+            {
+              "id": 2,
+              "picture_url": "https://scontent-atl3-1.xx.fbcdn.net/v/t31.0-8/19390956_10155731299778268_988960996723527525_o.jpg?oh=5251f29298b6038441712713a48f4c3b&oe=5A04A9AB",
+              "caption": "Should I make this my cover photo?",
+              "name": "Cameron Malagar",
+              "timestamp": "2017-06-06T02:36:18.463Z"
+            },
+            {
+              "id": 3,
+              "picture_url": "https://scontent-atl3-1.xx.fbcdn.net/v/t31.0-8/15591072_10211955960442492_6837384282795509691_o.jpg?oh=f4c7444baf497b37b36b287140b8bed0&oe=59C4ED3D",
+              "caption": "TBT to college :')",
+              "name": "Cameron Malagar",
+              "timestamp": "2017-05-07T01:36:18.463Z"
+            }
+          ];
+        const unorderedResponseByTimestamp =
+          [
+            {
+              "id": 3,
+              "picture_url": "https://scontent-atl3-1.xx.fbcdn.net/v/t31.0-8/19243401_10155731299773268_3326131387475979087_o.jpg?oh=55397630186bc2bc009e0ab6563bfaec&oe=59C5986F",
+              "caption": "Just being artsy at Chihuly Garden and Glass Museum in Seattle, WA",
+              "name": "Cameron Malagar",
+              "timestamp": "2017-04-01T01:36:18.463Z"
+            },
+            {
+              "id": 1,
+              "picture_url": "https://scontent-atl3-1.xx.fbcdn.net/v/t31.0-8/19390956_10155731299778268_988960996723527525_o.jpg?oh=5251f29298b6038441712713a48f4c3b&oe=5A04A9AB",
+              "caption": "Should I make this my cover photo?",
+              "name": "Cameron Malagar",
+              "timestamp": "2017-09-06T02:36:18.463Z"
+            },
+            {
+              "id": 2,
+              "picture_url": "https://scontent-atl3-1.xx.fbcdn.net/v/t31.0-8/15591072_10211955960442492_6837384282795509691_o.jpg?oh=f4c7444baf497b37b36b287140b8bed0&oe=59C4ED3D",
+              "caption": "TBT to college :')",
+              "name": "Cameron Malagar",
+              "timestamp": "2017-08-07T01:36:18.463Z"
+            }
+          ];
+
+        test('load timeline feed with empty data json object', function() {
+          var element = fixture('ChangedTimelineFeedFixture');
+          assert.equal(element.photos, []);
+          var elementShadowRoot = element.shadowRoot;
+          var elementHeader = elementShadowRoot.querySelector('h3');
+          assert.equal(elementHeader.innerHTML, 'There is no timeline data.');
+        });
+
+        test('load timeline feed with normal populated array of photos', function() {
+          var element = fixture('NormalTimelineFeedFixture');
+          assert.equal(element.photos.length, 3);
+          var elementShadowRoot = element.shadowRoot;
+          var elementHeader = elementShadowRoot.querySelector('span');
+          assert.equal(elementHeader.innerHTML, 'Posted On: 6/30/2017, 6:36 PM');
+        });
+
+        test('load timeline feed with unordered populated array of photos', function() {
+          var element = fixture('TimelineFeedFixtureWithUnorderedInput');
+          assert.equal(element.photos.length, 3);
+          var elementShadowRoot = element.shadowRoot;
+          var elementHeader = elementShadowRoot.querySelector('span');
+          assert.equal(elementHeader.innerHTML, 'Posted On: 9/5/2017, 7:36 PM');
+        });
+
+      });
+    </script>
+
+
+  </body>
+</html>

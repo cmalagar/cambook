@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="timeline-sidebar">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `timeline-sidebar`
+     * Sidebar of the timeline application
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class TimelineSidebar extends Polymer.Element {
+      static get is() { return 'timeline-sidebar'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'timeline-sidebar'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(TimelineSidebar.is, TimelineSidebar);
+  </script>
+</dom-module>

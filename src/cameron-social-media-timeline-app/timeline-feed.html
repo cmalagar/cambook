@@ -1,0 +1,88 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="timeline-feed">
+  <template>
+    <style>
+      .timelineElement {
+        border: 1px solid #c4c4c4;
+        border-radius: 5px;
+        margin: 20px;
+      }
+
+      .timelineCaption {
+        display: inline-flex;
+      }
+
+      .timelineDate {
+        font-size: 12px;
+        font-style: italic;
+        float: left;
+        display: block;
+      }
+
+      .timelineImage {
+        display: inline-flex;
+        border: 1px solid #dddddd;
+        padding: 5px;
+        width: 600px;
+        max-width: 90%;
+        height: 450px;
+      }
+
+      .timelineName {
+        display: inline-flex;
+        color: #3849de;
+      }
+
+    </style>
+
+    <template is="dom-if" if="{{!noTimelineData}}">
+      <template is="dom-repeat" items="{{photos}}">
+        <div class="timelineElement">
+          <div class="timelineDate"><span>Posted On: {{_formatDate(item)}}</span></div><br>
+          <div class="timelineName"><span>{{item.name}}:</span></div>
+          <div class="timelineCaption"><span>{{item.caption}}</span></div>
+          <div><img class="timelineImage" src="{{item.picture_url}}" alt="{{item.name}}"/></div>
+        </div>
+      </template>
+    </template>
+
+    <template is="dom-if" if="{{noTimelineData}}">
+      <div class="emptyTimeline"><h3>There is no timeline data.</h3></div>
+    </template>
+
+  </template>
+
+  <script>
+    class TimelineFeed extends Polymer.Element {
+      static get is() { return 'timeline-feed'; }
+      static get properties() {
+        return {
+          noTimelineData: {
+            type: Boolean,
+            value: true
+          },
+          photos: {
+            type: Array,
+            observer: '_photosChanged'
+          },
+        }
+      }
+
+      _photosChanged() {
+        this.noTimelineData = (this.photos == undefined) || (this.photos.length == 0);
+      }
+
+      _formatDate(e) {
+        var options = {
+          hour12: true,
+          hour: '2-digit',
+          minute: '2-digit'
+        };
+        return new Date(e.timestamp).toLocaleDateString("en-US", options);
+      }
+    }
+
+    window.customElements.define(TimelineFeed.is, TimelineFeed);
+  </script>
+</dom-module>

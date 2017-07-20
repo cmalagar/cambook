@@ -1,0 +1,66 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+
+<dom-module id="timeline-header">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        background-color: #3f577c;
+        color: #ffffff;
+        border: 2px solid #c3c3c3;
+        height:65px;
+        position: sticky;
+        top: 0;
+        left: 0;
+        right: 0;
+        justify-content: space-between;
+      }
+
+      .header_left {
+        float: left;
+        padding-left: 40px
+      }
+
+      .header_right {
+        float: right;
+        padding-right: 40px;
+      }
+    </style>
+
+    <div class="header_left">
+      <div class="header_left_content">
+        <h2>[[headerTitle]]</h2>
+      </div>
+    </div>
+
+    <div class="header_right">
+      <div class="header_right_content">
+        <h2>[[headerDescription]]</h2>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+
+    class TimelineHeader extends Polymer.Element {
+      static get is() { return 'timeline-header'; }
+      static get properties() {
+        return {
+          headerTitle: {
+            type: String,
+            value: 'CamBook'
+          },
+
+          headerDescription: {
+            type: String,
+            value: 'Unity'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(TimelineHeader.is, TimelineHeader);
+  </script>
+</dom-module>

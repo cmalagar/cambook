@@ -1,0 +1,44 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="timeline-footer">
+  <template>
+    <style>
+      :host {
+        display: block;
+        background-color: #3f577c;
+        color: #ffffff;
+        border: 2px solid #c3c3c3;;
+        font-size: 14px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 15px;
+      }
+    </style>
+
+    <div class="footer_container">
+      <div class="footer_signature">
+        [[footerSignature]]
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+
+    class TimelineFooter extends Polymer.Element {
+      static get is() { return 'timeline-footer'; }
+      static get properties() {
+        return {
+          footerSignature: {
+            type: String,
+            value: '@cmalagar5 | 2017'
+          },
+        };
+      }
+    }
+
+    window.customElements.define(TimelineFooter.is, TimelineFooter);
+  </script>
+</dom-module>

@@ -1,0 +1,81 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="timeline-header.html">
+<link rel="import" href="timeline-footer.html">
+<link rel="import" href="timeline-sidebar.html">
+<link rel="import" href="timeline-feed.html">
+<link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+
+<dom-module id="cameron-social-media-timeline-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        text-align: center;
+        font-family: 'Hind', sans-serif;
+        background-color:  #fff2e6;
+        padding-bottom: 50px;
+      }
+    </style>
+
+    <iron-ajax
+      id="getTimelineData"
+      url="../../json/input.json"
+      handle-as="json"
+      headers='{"timeout": 50000}'
+      on-response="_onGetTimelineData"
+      on-error="_onGetTimelineDataError">
+    </iron-ajax>
+
+    <timeline-header ></timeline-header>
+
+    <timeline-feed photos="{{photos}}"></timeline-feed>
+
+    <timeline-footer ></timeline-footer>
+
+  </template>
+
+  <script>
+    class CameronSocialMediaTimelineApp extends Polymer.Element {
+      static get is() { return 'cameron-social-media-timeline-app'; }
+
+      static get properties() {
+        return {
+          photos: {
+            type: Array
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+
+        this.$.getTimelineData.generateRequest();
+      }
+
+      _onGetTimelineData(e) {
+        if (e.detail.status == 204) {
+          console.log("There are no pictures to display");
+        } else if (e.detail.status == 200) {
+          console.log(e.detail.response);
+          this.photos = e.detail.response.response;
+          this.photos.sort(function (a,b) {
+            if (a.timestamp > b.timestamp) {
+              return -1;
+            } else {
+              return 1;
+            }
+          });
+        } else {
+          console.log("Something is wrong");
+        }
+      }
+
+      _onGetTimelineDataError(e) {
+        console.log("Error getting timeline data :/ ", e);
+      }
+    }
+
+    window.customElements.define(CameronSocialMediaTimelineApp.is, CameronSocialMediaTimelineApp);
+  </script>
+</dom-module>
